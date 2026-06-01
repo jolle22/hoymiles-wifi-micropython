@@ -95,6 +95,9 @@ dtu = DTU("192.168.1.100", is_encrypted=True, enc_rand=enc_rand)
 ```
 
 > **Note:** I didn't test the encryption after porting it to micro python.
+> For my DTU the implementation works with is_encrypted=False.
+> Review the encryption impletion before using it productively.
+> Using it is at your own risk.
 > The pure-Python GCM implementation in `ucrypt.py` is ~100 ms per
 > message on an ESP32-C6 at 160 MHz.  At 30-second polling intervals this is
 > acceptable.
@@ -127,3 +130,8 @@ The DTU returns raw integers; divide to get human-readable values:
 | `turn_on_inverter(sn)` | Start a specific inverter |
 | `turn_off_inverter(sn)` | Shut down a specific inverter |
 | `reboot_dtu()` | Reboot the DTU |
+
+
+## Run Tests
+
+cd tests && python -m pytest -v

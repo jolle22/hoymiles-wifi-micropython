@@ -27,9 +27,11 @@ If your DTU uses encryption (newer firmwares), pass:
 You can discover enc_rand from the APPInfoData response field dtu_info.enc_rand.
 """
 
+import sys
 import struct
 import time
 import asyncio
+import logging # https://github.com/erikdelange/MicroPython-Logging/blob/main/logging.py
 
 from ucrc16 import crc16
 from upb import (
@@ -228,7 +230,8 @@ class DTU:
                     reader.read(1024), self.timeout
                 )
             except Exception as e:
-                print("[DTU] Connection error:", e)
+                logging.error("[DTU] Connection error: %s", repr(e))
+                sys.print_exception(e)
                 return None
             finally:
                 if writer:

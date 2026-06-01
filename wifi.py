@@ -1,8 +1,6 @@
 import network
 import time
-
-def log_info(msg, *args):
-    print("[INFO]", msg % args if args else msg)
+import logging # https://github.com/erikdelange/MicroPython-Logging/blob/main/logging.py
 
 def wifi_connect(ssid, password, timeout=15):
     wlan = network.WLAN(network.STA_IF)
@@ -10,18 +8,18 @@ def wifi_connect(ssid, password, timeout=15):
     wlan.active(True)
     
     if wlan.isconnected():
-        log_info("Already connected, IP=%s", wlan.ifconfig()[0])
+        logging.info("Already connected, IP=%s", wlan.ifconfig()[0])
         return
     
     
-    log_info("Connecting to WiFi SSID=%s", ssid)
+    logging.info("Connecting to WiFi SSID=%s", ssid)
     try:
         wlan.connect(ssid, password)
     except OSError as e:
-        print("[ERROR]", e)
+        logging.error("[ERROR]" %s, e)
     start = time.time()
     while not wlan.isconnected():
         if time.time() - start > timeout:
             raise RuntimeError("WiFi connection timed out")
         time.sleep(1)
-    log_info("WiFi connected, IP=%s", wlan.ifconfig()[0])
+    logging.info("WiFi connected, IP=%s", wlan.ifconfig()[0])
