@@ -541,3 +541,4 @@ def _parse_app_info(fields: dict) -> dict:
         "dtu_info": dtu_info,
         "pv_info":  pvs,
     }
+
