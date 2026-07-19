@@ -4,12 +4,15 @@ import logging # https://github.com/erikdelange/MicroPython-Logging/blob/main/lo
 
 def wifi_connect(ssid, password, timeout=15):
     wlan = network.WLAN(network.STA_IF)
+    
     wlan.active(True)
+    
     if wlan.isconnected():
-        logging.info("Already connected, IP=%s", wlan.ifconfig()[0])
+        logging.debug("Already connected, IP=%s", wlan.ifconfig()[0])
         return
-
-    logging.info("Connecting to WiFi SSID=%s", ssid)
+    
+    
+    logging.debug("Connecting to WiFi SSID=%s", ssid)
     try:
         wlan.connect(ssid, password)
     except OSError as e:
@@ -19,4 +22,4 @@ def wifi_connect(ssid, password, timeout=15):
         if time.time() - start > timeout:
             raise RuntimeError("WiFi connection timed out")
         time.sleep(1)
-    logging.info("WiFi connected, IP=%s", wlan.ifconfig()[0])
+    logging.debug("WiFi connected, IP=%s", wlan.ifconfig()[0])
